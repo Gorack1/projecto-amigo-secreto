@@ -1,14 +1,7 @@
-// El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
 // El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. 
 // Aquí deberás desarrollar la lógica para resolver el problema.
 let amigos = []
 let indicesUsados = [];
-
-function asignarTextoElemento(elemento, texto) {
-    let elementoHTML = document.getElementById(elemento);
-    elementoHTML.innerHTML = texto;
-    return;
-}
 
 function agregarAmigo(){
     let amigo = document.getElementById("amigo").value;
@@ -22,10 +15,6 @@ function agregarAmigo(){
     }
 
     mostrarAmigos();
-}
-
-function vaciarCaja(idElemento){
-    document.getElementById(idElemento).value = "";
 }
 
 function mostrarAmigos(){
@@ -46,8 +35,8 @@ function sortearAmigo(){
     amigoSorteado.innerHTML = "";
     
     if (amigos.length != 0 && indicesUsados){
-        let indice = Math.floor(Math.random() * amigos.length);
-        indicesUsados.push(indice);
+        // se sortea un amigo
+        let indice = obtenerIndice(amigos.length);
         
         sorteado = amigos[indice];
         
@@ -55,4 +44,42 @@ function sortearAmigo(){
         elemento.textContent = sorteado;
         amigoSorteado.appendChild(elemento);
     } 
+    else{
+        alert("No se ha ingresado ningun nombre");
+    }
+}
+
+function obtenerIndice(numeroDePersonas){
+    
+    if (indicesUsados.length < numeroDePersonas){
+        let indice = Math.floor(Math.random() * numeroDePersonas);
+        
+        while (indicesUsados.includes(indice)){
+            indice = Math.floor(Math.random() * numeroDePersonas);
+            console.log("hola");
+        }
+        
+        indicesUsados.push(indice);
+        
+        return indice;
+    }
+    else{
+        alert("se han sorteado todos los amigos");
+        // volver a las condiciones iniciales
+        volverCondicionesIniciales();
+    }
+}
+
+function volverCondicionesIniciales(){
+    // vaciar lista de amigos en html
+    let listaSorteados = document.getElementById("listaAmigos");
+    listaSorteados.innerHTML = "";
+    
+    // limpiar listas
+    amigos = [];
+    indicesUsados = [];
+}
+
+function vaciarCaja(idElemento){
+    document.getElementById(idElemento).value = "";
 }
